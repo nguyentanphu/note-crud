@@ -1,5 +1,9 @@
 <form method='POST' action='/notes/save'>
-	<input type='hidden' name='doCreate' value='<%= doCreate ? "create" : "update"%>'>
+	{{#if doCreate }}
+	<input type='hidden' name='doCreate' value='create'>
+	{{else}}
+	<input type='hidden' name='doCreate' value='update'>
+	{{/if}}
 	<p>Key:
 		{{#if doCreate }}
 		<input type='text' name='noteKey' value='' />

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const notes = require('../models/notes-level')
+const notes = require('../models/notes-mongo')
 
 /* GET home page. */
 router.get('/', async function (req, res, next) {

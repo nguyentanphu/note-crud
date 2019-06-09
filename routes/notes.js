@@ -1,7 +1,7 @@
 const util = require('util')
 const express = require('express')
 const router = express.Router();
-const notes = require('../models/notes-level')
+const notes = require('../models/notes-mongo')
 
 router.get('/add', (req, res, next) => {
 	res.render('note-edit', {
