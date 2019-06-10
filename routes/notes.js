@@ -1,7 +1,7 @@
 const util = require('util')
 const express = require('express')
 const router = express.Router();
-const notes = require('../models/notes-mongo')
+const notes = require('../models/notes-sequelize')
 
 router.get('/add', (req, res, next) => {
 	res.render('note-edit', {

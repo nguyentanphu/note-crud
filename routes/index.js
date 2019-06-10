@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const notes = require('../models/notes-mongo')
+const notes = require('../models/notes-sequelize')
 
 /* GET home page. */
 router.get('/', async function (req, res, next) {
@@ -8,7 +8,6 @@ router.get('/', async function (req, res, next) {
 	const keyListPromises = keyList.map(k => notes.read(k))
 
 	const noteList = await Promise.all(keyListPromises)
-	console.log(noteList)
 	res.render('index', { title: 'Note', noteList })
 })
 

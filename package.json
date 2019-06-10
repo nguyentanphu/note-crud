@@ -14,11 +14,14 @@
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
     "jquery": "^1.9.1",
+    "js-yaml": "^3.13.1",
     "level": "^5.0.1",
     "mongodb": "^3.2.7",
     "morgan": "~1.9.1",
     "popper.js": "^1.14.7",
-    "rotating-file-stream": "^1.4.1"
+    "rotating-file-stream": "^1.4.1",
+    "sequelize": "^5.8.8",
+    "tedious": "^6.1.2"
   },
   "devDependencies": {
     "cross-env": "^5.2.0"

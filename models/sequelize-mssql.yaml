@@ -1,0 +1,7 @@
+dbname: Notes 
+username: sa
+password: 123456
+params: 
+    dialect: mssql 
+    host: .
+    port: 1433
