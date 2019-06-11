@@ -5,7 +5,7 @@
     "moduleResolution": "node"
   },
   "include": [
-    "*.js"
+    "**/*.js"
   ],
   "exclude": [
     "node_modules"
