@@ -1,5 +1,7 @@
 const createError = require('http-errors')
 const express = require('express')
+const session = require('express-session')
+const sessionFileStore = require('session-file-store')
 const hbs = require('hbs')
 const path = require('path')
 const cookieParser = require('cookie-parser')
@@ -10,6 +12,11 @@ const debug = require('debug')('notes:error')
 
 const indexRouter = require('./routes/index')
 const notesRouter = require('./routes/notes')
+
+const FileStore = sessionFileStore(session)
+const { router: users, initPassport } = require('./routes/users')
+
+exports.sessionCookieName = 'notescookie.sid'
 
 process.on('uncaughtException', (err) => {
   debug("I've crashed!!! - " + (err.stack || err));
