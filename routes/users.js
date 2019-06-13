@@ -3,7 +3,9 @@ const util = require('util')
 const express = require('express')
 const passport = require('passport')
 const passportLocal = require('passport-local')
+
 const usersModel = require('../models/notes-superagent')
+const { sessionCookieName } = require('../app')
 
 const LocalStrategy = passportLocal.Strategy
 const router = express.Router()
@@ -36,6 +38,7 @@ router.post('/login',
 
 router.get('/logout', function (req, res, next) {
 	try {
+		// @ts-ignore
 		req.session.destroy()
 		req.logout()
 		res.clearCookie(sessionCookieName)

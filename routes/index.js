@@ -8,7 +8,11 @@ router.get('/', async function (req, res, next) {
 	const keyListPromises = keyList.map(k => notes.read(k))
 
 	const noteList = await Promise.all(keyListPromises)
-	res.render('index', { title: 'Note', noteList })
+	res.render('index', { 
+		title: 'Note', 
+		noteList,
+		user: req.user ? req.user : undefined
+	})
 })
 
 module.exports = router

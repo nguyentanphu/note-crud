@@ -1,9 +1,11 @@
 const util = require('util')
 const express = require('express')
+const { ensureAuthenticated } = require('./users')
+
 const router = express.Router();
 const notes = require('../models/notes-sequelize')
 
-router.get('/add', (req, res, next) => {
+router.get('/add', ensureAuthenticated, (req, res, next) => {
 	res.render('note-edit', {
 		title: 'Add a note',
 		doCreate: true,
@@ -12,7 +14,7 @@ router.get('/add', (req, res, next) => {
 	})
 })
 
-router.post('/save', async (req, res, next) => {
+router.post('/save', ensureAuthenticated, async (req, res, next) => {
 	const { doCreate, noteKey, title, body } = req.body
 	let note = null
 	if (doCreate === 'create') {
@@ -34,11 +36,12 @@ router.get('/view/:key', async (req, res, next) => {
 	res.render('note-view', {
 		title: note.title,
 		noteKey: requestKey,
-		note
+		note,
+		user: req.user
 	})
 })
 
-router.get('/edit/:key', async (req, res, next) => {
+router.get('/edit/:key', ensureAuthenticated, async (req, res, next) => {
 	const noteKey = req.params.key
 	if (!noteKey)
 		throw new Error('key must be defined')
@@ -49,11 +52,12 @@ router.get('/edit/:key', async (req, res, next) => {
 		title: `Edit ${currentNote.title}`,
 		doCreate: false,
 		noteKey,
-		note: currentNote
+		note: currentNote,
+		user: req.user
 	})
 })
 
-router.get('/destroy/:key', async (req, res, next) => {
+router.get('/destroy/:key', ensureAuthenticated, async (req, res, next) => {
 	const noteKey = req.params.key
 	if (!noteKey)
 		throw new Error(`Note with key: ${noteKey} does not exist`)

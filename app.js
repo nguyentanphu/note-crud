@@ -16,7 +16,7 @@ const notesRouter = require('./routes/notes')
 const FileStore = sessionFileStore(session)
 const { router: users, initPassport } = require('./routes/users')
 
-exports.sessionCookieName = 'notescookie.sid'
+const sessionCookieName = 'notescookie.sid'
 
 process.on('uncaughtException', (err) => {
   debug("I've crashed!!! - " + (err.stack || err));
@@ -56,6 +56,16 @@ if (process.env.REQUEST_LOG_FILE) {
 
 app.use(logger('dev'));
 
+app.use(session({
+	store: new FileStore({ path: 'sessions' }),
+	secret: 'keyboard mouse',
+	resave: true,
+	saveUninitialized: true,
+	name: this.sessionCookieName
+}))
+
+initPassport(app)
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
@@ -66,6 +76,7 @@ app.use('/assets/vendors/popper.js', express.static(path.join(__dirname, 'node_m
 
 app.use('/', indexRouter)
 app.use('/notes', notesRouter)
+app.use('/users', users)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -75,6 +86,7 @@ app.use(function (req, res, next) {
 // error handler
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
+  console.log(err, 'errrrrrrrrrrrrr')
   res.locals.message = err.message
   res.locals.error = req.app.get('env') === 'development' ? err : {}
 
@@ -83,4 +95,7 @@ app.use(function (err, req, res, next) {
   res.render('error')
 })
 
-module.exports = app
+module.exports = {
+	app,
+	sessionCookieName
+}
